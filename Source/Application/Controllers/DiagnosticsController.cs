@@ -164,7 +164,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 		{
 			var model = new OptionsViewModel();
 
-			model.Options.Add(typeof(ExtendedIdentityServerOptions), JsonConvert.SerializeObject(this.Facade.IdentityServer.Value, this.JsonSerializerSettings));
+			model.Options.Add(typeof(ExtendedIdentityServerOptions), JsonConvert.SerializeObject(this.Facade.IdentityServer.CurrentValue, this.JsonSerializerSettings));
 
 			return await Task.FromResult(this.View(model));
 		}

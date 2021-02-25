@@ -53,7 +53,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 			form.IdentityResources.Add(authorizationRequest.ValidatedResources.Resources.IdentityResources.Select(this.CreateScopeViewModel));
 			form.ApiScopes.Add(authorizationRequest.ValidatedResources.Resources.ApiScopes.Select(this.CreateScopeViewModel));
 
-			if(this.Facade.IdentityServer.Value.Consent.OfflineAccessEnabled && authorizationRequest.ValidatedResources.Resources.OfflineAccess)
+			if(this.Facade.IdentityServer.CurrentValue.Consent.OfflineAccessEnabled && authorizationRequest.ValidatedResources.Resources.OfflineAccess)
 			{
 				form.ApiScopes.Add(new ScopeViewModel
 				{
@@ -213,7 +213,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 			if(!form.ConsentedApiScopes.Contains(offlineAccessScopeName, StringComparer.OrdinalIgnoreCase))
 				return;
 
-			if(!this.Facade.IdentityServer.Value.Consent.OfflineAccessEnabled)
+			if(!this.Facade.IdentityServer.CurrentValue.Consent.OfflineAccessEnabled)
 				this.ModelState.AddModelError(offlineAccessScopeName, this.GetLocalizedValue("errors/not-enabled", offlineAccessScopeName));
 
 			if(!authorizationRequest.ValidatedResources.Resources.OfflineAccess)

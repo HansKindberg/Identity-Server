@@ -45,7 +45,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 			if(form == null)
 				throw new ArgumentNullException(nameof(form));
 
-			var options = this.Facade.RequestLocalization.Value;
+			var options = this.Facade.RequestLocalization.CurrentValue;
 
 			var comparison = StringComparison.OrdinalIgnoreCase;
 
