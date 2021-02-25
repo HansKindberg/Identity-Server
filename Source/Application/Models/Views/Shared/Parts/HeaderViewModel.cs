@@ -192,6 +192,7 @@ namespace HansKindberg.IdentityServer.Application.Models.Views.Shared.Parts
 
 		#region Methods
 
+		[SuppressMessage("Globalization", "CA1304:Specify CultureInfo")]
 		protected internal virtual void AddDebugNavigationNode(NavigationNode navigation)
 		{
 			if(navigation == null)
