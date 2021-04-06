@@ -7,9 +7,12 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using HansKindberg.IdentityServer.Application.Models.Views.DataTransfer;
 using HansKindberg.IdentityServer.Data.Extensions;
+using HansKindberg.IdentityServer.Data.Saml.Extensions;
 using HansKindberg.IdentityServer.Data.Transferring;
+using HansKindberg.IdentityServer.Data.WsFederation.Extensions;
 using HansKindberg.IdentityServer.Extensions;
 using HansKindberg.IdentityServer.FeatureManagement;
+using HansKindberg.IdentityServer.FeatureManagement.Extensions;
 using HansKindberg.IdentityServer.Identity;
 using HansKindberg.IdentityServer.Json.Serialization;
 using HansKindberg.IdentityServer.Web.Authorization;
@@ -21,14 +24,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Microsoft.FeatureManagement;
 using Microsoft.FeatureManagement.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RegionOrebroLan.Logging.Extensions;
+using Rsk.Saml.IdentityProvider.Storage.EntityFramework.Entities;
+using Rsk.Saml.IdentityProvider.Storage.EntityFramework.Interfaces;
+using Rsk.WsFederation.EntityFramework.DbContexts;
+using Rsk.WsFederation.EntityFramework.Entities;
+using ServiceProvider = Rsk.Saml.IdentityProvider.Storage.EntityFramework.Entities.ServiceProvider;
 
 namespace HansKindberg.IdentityServer.Application.Controllers
 {
+	// ReSharper disable All
 	[Authorize(Permissions.Administrator)]
 	[FeatureGate(Feature.DataTransfer)]
 	[SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling")]
@@ -42,11 +53,21 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 
 		#region Constructors
 
-		public DataTransferController(IConfigurationDbContext configurationDatabaseContext, IDataExporter dataExporter, IDataImporter dataImporter, IFacade facade) : base(facade)
+		public DataTransferController(IConfigurationDbContext configurationDatabaseContext, IDataExporter dataExporter, IDataImporter dataImporter, IFacade facade, IFeatureManager featureManager, IServiceProvider serviceProvider) : base(facade)
 		{
 			this.ConfigurationDatabaseContext = configurationDatabaseContext ?? throw new ArgumentNullException(nameof(configurationDatabaseContext));
 			this.DataExporter = dataExporter ?? throw new ArgumentNullException(nameof(dataExporter));
 			this.DataImporter = dataImporter ?? throw new ArgumentNullException(nameof(dataImporter));
+			this.FeatureManager = featureManager ?? throw new ArgumentNullException(nameof(featureManager));
+
+			if(serviceProvider == null)
+				throw new ArgumentNullException(nameof(serviceProvider));
+
+			if(featureManager.IsEnabled(Feature.Saml))
+				this.SamlDatabaseContext = serviceProvider.GetRequiredService<ISamlConfigurationDbContext>();
+
+			if(featureManager.IsEnabled(Feature.WsFederation))
+				this.WsFederationDatabaseContext = serviceProvider.GetRequiredService<IWsFederationConfigurationDbContext>();
 		}
 
 		#endregion
@@ -63,6 +84,10 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 			Formatting = Formatting.Indented,
 			NullValueHandling = NullValueHandling.Ignore
 		};
+
+		protected internal virtual IFeatureManager FeatureManager { get; }
+		protected internal ISamlConfigurationDbContext SamlDatabaseContext { get; }
+		protected internal IWsFederationConfigurationDbContext WsFederationDatabaseContext { get; }
 
 		#endregion
 
@@ -167,7 +192,6 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 
 			var model = this.CreateExportViewModel(form);
 
-			// ReSharper disable InvertIf
 			if(this.ModelState.IsValid)
 			{
 				try
@@ -184,7 +208,6 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 					this.ModelState.AddModelError(nameof(ImportForm.Files), this.Localizer.GetString("errors/ExportException"));
 				}
 			}
-			// ReSharper restore InvertIf
 
 			return await Task.FromResult(this.View(model));
 		}
@@ -206,7 +229,6 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 
 			var model = new ImportViewModel {Form = form};
 
-			// ReSharper disable InvertIf
 			if(this.ModelState.IsValid)
 			{
 				try
@@ -234,12 +256,10 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 					this.ModelState.AddModelError(nameof(ImportForm.Files), this.Localizer.GetString("errors/ImportException"));
 				}
 			}
-			// ReSharper restore InvertIf
 
 			return await Task.FromResult(this.View(model));
 		}
 
-		[SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling")]
 		public virtual async Task<IActionResult> Index()
 		{
 			var model = new DataTransferViewModel();
@@ -276,9 +296,25 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 			model.ExistingData.Add(typeof(Role).FriendlyName(), await identityContext.Roles.CountAsync());
 			model.ExistingData.Add(typeof(User).FriendlyName(), await identityContext.Users.CountAsync());
 
+			if(this.FeatureManager.IsEnabled(Feature.Saml))
+			{
+				model.ExistingData.Add(typeof(AssertionConsumerService).FriendlyName(), await this.SamlDatabaseContext.AssertionConsumerServices().CountAsync());
+				model.ExistingData.Add(typeof(SamlClaimMap).FriendlyName(), await this.SamlDatabaseContext.ClaimsMapping().CountAsync());
+				model.ExistingData.Add(typeof(ServiceProvider).FriendlyName(), await this.SamlDatabaseContext.ServiceProviders.CountAsync());
+				model.ExistingData.Add(typeof(SigningCertificate).FriendlyName(), await this.SamlDatabaseContext.SigningCertificates().CountAsync());
+				model.ExistingData.Add(typeof(SingleLogoutService).FriendlyName(), await this.SamlDatabaseContext.SingleLogoutServices().CountAsync());
+			}
+
+			if(this.FeatureManager.IsEnabled(Feature.WsFederation))
+			{
+				model.ExistingData.Add(typeof(RelyingParty).FriendlyName(), await this.WsFederationDatabaseContext.RelyingParties.CountAsync());
+				model.ExistingData.Add(typeof(WsFederationClaimMap).FriendlyName(), await this.WsFederationDatabaseContext.ClaimMapping().CountAsync());
+			}
+
 			return await Task.FromResult(this.View(model));
 		}
 
 		#endregion
 	}
+	// ReSharper restore All
 }
