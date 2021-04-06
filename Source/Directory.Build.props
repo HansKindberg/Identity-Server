@@ -3,5 +3,6 @@
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<NoWarn>CA1014</NoWarn>
 	</PropertyGroup>
 </Project>
