@@ -11,7 +11,7 @@
 		<UserSecretsId>678cced0-ee5a-45b3-940b-32b005fd4063</UserSecretsId>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="HansKindberg.IdentityServer" Version="0.0.9-alpha" />
+		<PackageReference Include="HansKindberg.IdentityServer" Version="0.0.10-alpha" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.13" Condition="'$(Configuration)' == 'Debug'" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" Condition="'$(Configuration)' == 'Debug'" />
 		<PackageReference Include="RegionOrebroLan.Configuration" Version="0.0.5-alpha" />
