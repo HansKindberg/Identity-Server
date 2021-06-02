@@ -328,7 +328,6 @@ namespace HansKindberg.IdentityServer.Application.Models.Views.Shared.Parts
 			return this.CreateRelativeUrl(this.HttpContext.Request.Path, queryString);
 		}
 
-		[SuppressMessage("Style", "IDE0110:Remove unnecessary discard")]
 		protected internal virtual string GetCultureNavigationTooltip()
 		{
 			var informationArgument = this.RequestCultureFeature.Provider switch

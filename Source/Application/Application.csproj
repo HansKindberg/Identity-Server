@@ -4,7 +4,6 @@
 		<!-- DisableFastUpToDateCheck: https://docs.microsoft.com/sv-se/visualstudio/msbuild/common-msbuild-project-properties/ -->
 		<DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-		<LangVersion>9.0</LangVersion>
 		<RootNamespace>$(AssemblyName)</RootNamespace>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
