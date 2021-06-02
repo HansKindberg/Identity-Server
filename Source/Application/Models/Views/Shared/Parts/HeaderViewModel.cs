@@ -328,15 +328,14 @@ namespace HansKindberg.IdentityServer.Application.Models.Views.Shared.Parts
 			return this.CreateRelativeUrl(this.HttpContext.Request.Path, queryString);
 		}
 
-		[SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase")]
 		protected internal virtual string GetCultureNavigationTooltip()
 		{
 			var informationArgument = this.RequestCultureFeature.Provider switch
 			{
 				null => this.Localizer.GetString("the default settings"),
-				AcceptLanguageHeaderRequestCultureProvider _ => this.Localizer.GetString("the request-header (browser-settings)"),
-				CookieRequestCultureProvider _ => this.Localizer.GetString("a cookie"),
-				OpenIdConnectRequestCultureProvider _ => this.Localizer.GetString("the query-string"),
+				AcceptLanguageHeaderRequestCultureProvider => this.Localizer.GetString("the request-header (browser-settings)"),
+				CookieRequestCultureProvider => this.Localizer.GetString("a cookie"),
+				OpenIdConnectRequestCultureProvider => this.Localizer.GetString("the query-string"),
 				_ => null
 			};
 
