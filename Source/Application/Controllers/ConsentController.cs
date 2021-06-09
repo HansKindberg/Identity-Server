@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
+using Duende.IdentityServer.Models;
 using HansKindberg.IdentityServer.Application.Models.Views.Consent;
 using HansKindberg.IdentityServer.Models.Extensions;
-using IdentityServer4.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

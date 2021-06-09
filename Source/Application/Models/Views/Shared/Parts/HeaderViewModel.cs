@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using Duende.IdentityServer.Extensions;
 using HansKindberg.IdentityServer.Application.Controllers;
 using HansKindberg.IdentityServer.FeatureManagement;
 using HansKindberg.IdentityServer.FeatureManagement.Extensions;
@@ -14,7 +15,6 @@ using HansKindberg.IdentityServer.Web.Extensions;
 using HansKindberg.IdentityServer.Web.Http.Extensions;
 using HansKindberg.IdentityServer.Web.Localization;
 using HansKindberg.IdentityServer.Web.Routing;
-using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Localization;
@@ -333,9 +333,9 @@ namespace HansKindberg.IdentityServer.Application.Models.Views.Shared.Parts
 			var informationArgument = this.RequestCultureFeature.Provider switch
 			{
 				null => this.Localizer.GetString("the default settings"),
-				AcceptLanguageHeaderRequestCultureProvider _ => this.Localizer.GetString("the request-header (browser-settings)"),
-				CookieRequestCultureProvider _ => this.Localizer.GetString("a cookie"),
-				OpenIdConnectRequestCultureProvider _ => this.Localizer.GetString("the query-string"),
+				AcceptLanguageHeaderRequestCultureProvider => this.Localizer.GetString("the request-header (browser-settings)"),
+				CookieRequestCultureProvider => this.Localizer.GetString("a cookie"),
+				OpenIdConnectRequestCultureProvider => this.Localizer.GetString("the query-string"),
 				_ => null
 			};
 

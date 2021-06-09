@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
 using HansKindberg.IdentityServer.Application.Models.Views.Consent;
 using HansKindberg.IdentityServer.Application.Models.Views.Device;
 using HansKindberg.IdentityServer.Application.Models.Views.Device.Extensions;
 using HansKindberg.IdentityServer.Web;
-using IdentityServer4.Models;
-using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;

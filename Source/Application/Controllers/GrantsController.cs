@@ -1,10 +1,10 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Duende.IdentityServer.Events;
+using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Stores;
 using HansKindberg.IdentityServer.Application.Models.Views.Grants;
-using IdentityServer4.Events;
-using IdentityServer4.Extensions;
-using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegionOrebroLan.Collections.Generic.Extensions;

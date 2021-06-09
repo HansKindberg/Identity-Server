@@ -363,7 +363,6 @@ FodyWeavers.xsd
 
 # Custom
 Source/Application/Data/*
-!Source/Application/Data/Development-Signing-Certificate.pfx
 !Source/Application/Data/Development-Key-Protection-Certificate.pfx
 !Source/Application/Data/ReadMe.md
 !Source/Application/Data/Test-IdentityServer-Root-CA.cer

@@ -2,15 +2,15 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using Duende.IdentityServer.Events;
+using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Stores;
 using HansKindberg.IdentityServer.Application.Models.Views.Account;
 using HansKindberg.IdentityServer.FeatureManagement;
 using HansKindberg.IdentityServer.FeatureManagement.Extensions;
 using HansKindberg.IdentityServer.Models.Extensions;
 using HansKindberg.IdentityServer.Web.Extensions;
-using IdentityServer4.Events;
-using IdentityServer4.Extensions;
-using IdentityServer4.Models;
-using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -74,11 +74,11 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 
 			if(authorizationRequest?.IdP != null)
 			{
-				var authenticationScheme = await this.Facade.AuthenticationSchemeLoader.GetAsync(authorizationRequest.IdP);
+				var authenticationScheme = await this.Facade.AuthenticationSchemeRetriever.GetAsync(authorizationRequest.IdP);
 
 				if(authenticationScheme != null)
 				{
-					model.FormsAuthenticationEnabled = model.FormsAuthenticationEnabled && string.Equals(authenticationScheme.Name, IdentityServer4.IdentityServerConstants.LocalIdentityProvider, StringComparison.OrdinalIgnoreCase);
+					model.FormsAuthenticationEnabled = model.FormsAuthenticationEnabled && string.Equals(authenticationScheme.Name, Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider, StringComparison.OrdinalIgnoreCase);
 
 					if(!model.FormsAuthenticationEnabled)
 						model.AuthenticationSchemes.Add(authenticationScheme);
@@ -87,7 +87,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 				}
 			}
 
-			var authenticationSchemes = (await this.Facade.AuthenticationSchemeLoader.ListAsync())
+			var authenticationSchemes = (await this.Facade.AuthenticationSchemeRetriever.ListAsync())
 				.Where(authenticationScheme => authenticationScheme.Interactive && authenticationScheme.Kind != AuthenticationSchemeKind.Cookie)
 				.OrderBy(authenticationScheme => authenticationScheme.Index)
 				.ThenBy(authenticationScheme => authenticationScheme.Name, StringComparer.OrdinalIgnoreCase);
@@ -278,9 +278,9 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 			{
 				var authenticationSchemeName = this.User.Claims.FindFirstIdentityProviderClaim()?.Value;
 
-				if(authenticationSchemeName != null && !string.Equals(authenticationSchemeName, IdentityServer4.IdentityServerConstants.LocalIdentityProvider, StringComparison.OrdinalIgnoreCase))
+				if(authenticationSchemeName != null && !string.Equals(authenticationSchemeName, Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider, StringComparison.OrdinalIgnoreCase))
 				{
-					var authenticationScheme = await this.Facade.AuthenticationSchemeLoader.GetAsync(authenticationSchemeName);
+					var authenticationScheme = await this.Facade.AuthenticationSchemeRetriever.GetAsync(authenticationSchemeName);
 
 					if(authenticationScheme != null && authenticationScheme.SignOutSupport)
 					{

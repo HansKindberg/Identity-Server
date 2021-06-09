@@ -6,6 +6,7 @@ using HansKindberg.IdentityServer.Application.Models.Views.Diagnostics;
 using HansKindberg.IdentityServer.Configuration;
 using HansKindberg.IdentityServer.FeatureManagement;
 using HansKindberg.IdentityServer.Json.Serialization;
+using HansKindberg.IdentityServer.Web.Authentication.Extensions;
 using HansKindberg.IdentityServer.Web.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection.Infrastructure;
@@ -18,7 +19,6 @@ using Microsoft.FeatureManagement.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using RegionOrebroLan.Configuration.Extensions;
-using RegionOrebroLan.Web.Authentication.Extensions;
 
 namespace HansKindberg.IdentityServer.Application.Controllers
 {
@@ -68,7 +68,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 		{
 			var model = new AuthenticationSchemeViewModel();
 
-			var items = (await this.Facade.AuthenticationSchemeLoader.GetDiagnosticsAsync(this.HttpContext.RequestServices)).OrderBy(item => item.Key.Name).ToArray();
+			var items = (await this.Facade.AuthenticationSchemeRetriever.GetDiagnosticsAsync(this.HttpContext.RequestServices)).OrderBy(item => item.Key.Name).ToArray();
 
 			model.AuthenticationSchemesMissing = !items.Any();
 

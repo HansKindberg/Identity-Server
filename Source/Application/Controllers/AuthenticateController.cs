@@ -3,12 +3,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Duende.IdentityServer;
+using Duende.IdentityServer.Events;
+using Duende.IdentityServer.Stores;
 using HansKindberg.IdentityServer.Extensions;
 using HansKindberg.IdentityServer.Models.Extensions;
 using HansKindberg.IdentityServer.Web.Authentication;
-using IdentityServer4;
-using IdentityServer4.Events;
-using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -236,7 +236,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 			if(name == null)
 				throw new ArgumentNullException(nameof(name));
 
-			var authenticationScheme = await this.Facade.AuthenticationSchemeLoader.GetAsync(name);
+			var authenticationScheme = await this.Facade.AuthenticationSchemeRetriever.GetAsync(name);
 
 			if(authenticationScheme == null)
 				throw new InvalidOperationException($"The authentication-scheme \"{name}\" does not exist.");
