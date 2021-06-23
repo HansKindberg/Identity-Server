@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -29,6 +30,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 
 		#region Methods
 
+		[SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling")]
 		public virtual async Task<IActionResult> Callback()
 		{
 			this.Logger.LogDebugIfEnabled("Callback starting...");
