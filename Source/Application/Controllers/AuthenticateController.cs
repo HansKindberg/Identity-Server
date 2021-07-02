@@ -33,7 +33,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 		[SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling")]
 		public virtual async Task<IActionResult> Callback()
 		{
-			this.Logger.LogDebugIfEnabled("Callback starting...");
+			this.Logger.LogDebugIfEnabled("Callback: starting...");
 
 			var authenticateResult = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
