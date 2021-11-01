@@ -12,7 +12,7 @@
 				{
 					<li class="list-group-item">
 						<partial name="ValidationSummary" />
-						<partial model="@Model.Form" name="SignInForm" view-data="@(new ViewDataDictionary(ViewData) {{ViewDataKeys.PersistenceEnabled, Model.FormsAuthentication.Persistent}})" />
+						<partial model="@Model.Form" name="SignInForm" view-data="@(new ViewDataDictionary(ViewData) { { ViewDataKeys.PersistenceEnabled, Model.FormsAuthentication.Persistent } })" />
 					</li>
 				}
 				@foreach(var authenticationScheme in Model.AuthenticationSchemes)
@@ -27,7 +27,7 @@
 								<svg class="size-1-point-4-rem" role="presentation">
 									<use xlink:href="/Style/Icons/sprite.svg#@authenticationScheme.Icon" />
 								</svg>
-								<span class="font-weight-light">@Localizer.GetString("sign-in-with")</span> @heading
+								<span class="fw-light">@Localizer.GetString("sign-in-with")</span> @heading
 							</h2>
 						</a>
 					</li>
