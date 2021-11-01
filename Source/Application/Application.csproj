@@ -15,8 +15,9 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" Condition="'$(Configuration)' == 'Debug'" />
 	</ItemGroup>
 	<ItemGroup>
-		<Content Remove="*.config;*.json;wwwroot\**\.gitkeep" />
-		<None Include="*.config;*.json;wwwroot\**\.gitkeep" />
+		<None_ Include="wwwroot\**\.gitkeep;package.json;package-lock.json;tsconfig.json" />
+		<Content Remove="@(None_)" />
+		<None Include="@(None_)" />
 		<None Remove="Resources\**\*.xml" />
 		<Content Include="Resources\**\*.xml">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>

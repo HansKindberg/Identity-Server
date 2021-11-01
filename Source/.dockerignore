@@ -23,3 +23,9 @@
 **/values.dev.yaml
 LICENSE
 README.md
+
+# Custom
+Application/appsettings.json
+Application/appsettings.*.json
+Application/Web.config
+Application/Web.*.config
