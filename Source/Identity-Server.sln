@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{38D999A4-6B21-4A21-B3B7-2D1907C80840}"
 	ProjectSection(SolutionItems) = preProject
-		..\.dockerignore = ..\.dockerignore
+		.dockerignore = .dockerignore
 		..\.editorconfig = ..\.editorconfig
 		..\.gitignore = ..\.gitignore
 		..\License = ..\License
