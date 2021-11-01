@@ -148,7 +148,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 
 			await this.Facade.Events.RaiseAsync(new ConsentDeniedEvent(this.User.GetSubjectId(), authorizationRequest.Client.ClientId, authorizationRequest.ValidatedResources.RawScopeValues));
 
-			return new ConsentResponse {Error = AuthorizationError.AccessDenied};
+			return new ConsentResponse { Error = AuthorizationError.AccessDenied };
 		}
 
 		protected internal virtual async Task ValidateConsentAsync(AuthorizationRequest authorizationRequest, ConsentForm form)

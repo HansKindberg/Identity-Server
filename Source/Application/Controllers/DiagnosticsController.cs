@@ -51,7 +51,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 		protected internal virtual JsonSerializerSettings JsonSerializerSettings => _jsonSerializerSettings ??= new JsonSerializerSettings
 		{
 			ContractResolver = new ContractResolver(),
-			Converters = {new StringEnumConverter()},
+			Converters = { new StringEnumConverter() },
 			Formatting = Formatting.Indented,
 			NullValueHandling = NullValueHandling.Ignore,
 			PreserveReferencesHandling = PreserveReferencesHandling.None,
