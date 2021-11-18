@@ -42,13 +42,13 @@
 			XmlInputPath="$(_ApplicationHostConfigurationFile)"
 		/>
 	</Target>
-	<Target Name="WarnOnMissingApplicationHostConfigurationFile" BeforeTargets="PrepareForRun" Condition="!Exists('$(_ApplicationHostConfigurationFile)')">
+	<Target Name="WarnOnMissingApplicationHostConfigurationFile" BeforeTargets="PrepareForRun" Condition="'$(SkipWarningOnMissingApplicationHostConfigurationFile)' != 'true' And !Exists('$(_ApplicationHostConfigurationFile)')">
 		<PropertyGroup>
 			<_Line>------------------------------------------------------------------------------------------------------------------------------------------</_Line>
 			<_Message>The file '$(_ApplicationHostConfigurationFile)' does not exist.</_Message>
 		</PropertyGroup>
 		<Warning
-			Text="$(_Message)"
+			Text="$(_Message) If you want to disable this warning you can pass '/p:SkipWarningOnMissingApplicationHostConfigurationFile=true' when building."
 		/>
 		<Message
 			Importance="high"
