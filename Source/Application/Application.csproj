@@ -12,7 +12,7 @@
 	<ItemGroup>
 		<PackageReference Include="HansKindberg.IdentityServer" Version="5.2.3-alpha" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.11" Condition="'$(Configuration)' == 'Debug'" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" Condition="'$(Configuration)' == 'Debug'" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" Condition="'$(Configuration)' == 'Debug'" />
 	</ItemGroup>
 	<ItemGroup>
 		<None_ Include="wwwroot\**\.gitkeep;package.json;package-lock.json;tsconfig.json" />
