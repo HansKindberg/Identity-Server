@@ -1,6 +1,10 @@
 <Project>
 	<PropertyGroup>
-		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+		<!-- https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#analysislevel -->
+		<!-- AnalysisLevel: Set to 5 because the target-frameworks are net5.0. When setting target-frameworks to net6.0 also set AnalysisLevel to 6. If not set there may be build-errors and build-warnings depending on what SDK's are installed on the building machine. -->
+		<!-- But in my opinion this is not working. Using VS 2019 having .NET 6 SDK installed. -->
+		<AnalysisLevel>5</AnalysisLevel>
+		<AnalysisMode>All</AnalysisMode>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<NoWarn>CA1014;CS8032;CS8033</NoWarn>

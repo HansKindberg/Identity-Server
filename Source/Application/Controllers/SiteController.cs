@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using HansKindberg.IdentityServer.Application.Models.Views.Shared;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 
 		#region Methods
 
+		[SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "If we have the .NET 6 sdk installed the analyzers may behave differently therefore we suppress it.")]
 		protected internal virtual string GetLocalizedValue(string key, params string[] argumentKeys)
 		{
 			if(key == null)
@@ -40,7 +42,7 @@ namespace HansKindberg.IdentityServer.Application.Controllers
 			var arguments = new List<object>();
 
 			// ReSharper disable LoopCanBeConvertedToQuery
-			foreach(var argumentKey in argumentKeys ?? Array.Empty<string>())
+			foreach(var argumentKey in argumentKeys)
 			{
 				var localizedArgument = this.Localizer.GetString(argumentKey);
 
