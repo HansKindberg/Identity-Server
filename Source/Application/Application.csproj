@@ -10,7 +10,7 @@
 		<UserSecretsId>678cced0-ee5a-45b3-940b-32b005fd4063</UserSecretsId>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="HansKindberg.IdentityServer" Version="5.2.3-alpha" />
+		<PackageReference Include="HansKindberg.IdentityServer" Version="5.2.3-alpha.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.11" Condition="'$(Configuration)' == 'Debug'" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" Condition="'$(Configuration)' == 'Debug'" />
 	</ItemGroup>
