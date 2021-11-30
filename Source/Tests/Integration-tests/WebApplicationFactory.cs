@@ -21,7 +21,7 @@ namespace IntegrationTests
 
 		protected override IHostBuilder CreateHostBuilder()
 		{
-			return Host.CreateHostBuilder<Startup>(null).UseEnvironment("Local-Development");
+			return Host.CreateHostBuilder<Startup>(null).UseEnvironment("Development");
 		}
 
 		#endregion
