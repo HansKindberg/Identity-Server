@@ -1,5 +1,7 @@
 # Identity-Server
 
-![.github/workflows/Docker-Deploy.yml](https://github.com/HansKindberg/Identity-Server/actions/workflows/Docker-Deploy.yml/badge.svg)
+This repository is now archived. Use the IdentityServer-implementation here instead:
 
-IdentityServer instance, without configuration, pushed to Docker Hub: https://hub.docker.com/r/hanskindberg/identity-server
+- https://github.com/HansKindberg/IdentityServer-Extensions/tree/master/Source/Implementations/Identity-Server/Application
+
+That implementation, without configuration, will be pushed to Docker Hub https://hub.docker.com/r/hanskindberg/identity-server instead.
